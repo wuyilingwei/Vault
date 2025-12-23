@@ -89,5 +89,56 @@ Once deployed, you can access the frontend at your worker's URL (e.g., `https://
 
 Use the `ADMIN_PASSWORD` you set to log in and manage tokens and permissions.
 
+### API Usage Example
+
+**Request** `POST /api/data`
+
+```json
+{
+    "ops": [
+        { "id": "task1", "type": "write", "module": "ip", "key": "blacklist", "value": "ip1", "separator": ", " },
+        { "id": "task2", "type": "append", "module": "ip", "key": "blacklist", "value": "ip2" },
+        { "id": "task3", "type": "read", "module": "ip", "key": "blacklist" },
+        { "id": "task4", "type": "write", "module": "ip", "key": "whitelist", "value": "ip3"  }
+    ]
+}
+```
+
+**Response**
+
+```json
+[
+    {
+        "id": "task1",
+        "status": 200,
+        "data": {
+            "last_update": "2025-12-23T01:56:56.653Z"
+        }
+    },
+    {
+        "id": "task2",
+        "status": 200,
+        "data": {
+            "last_update": "2025-12-23T01:56:59.704Z"
+        }
+    },
+    {
+        "id": "task3",
+        "status": 200,
+        "data": {
+            "content": "ip1, ip2",
+            "last_update": "2025-12-23T01:56:59.704Z"
+        }
+    },
+    {
+        "id": "task4",
+        "status": 403,
+        "data": {
+            "error": "Write Permission Denied"
+        }
+    }
+]
+```
+
 
 
