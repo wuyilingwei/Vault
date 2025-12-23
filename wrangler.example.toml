@@ -1,0 +1,19 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "vault-service"
+main = "src/index.js"
+compatibility_date = "2025-12-22"
+
+[vars]
+API_PREFIX = "/api"
+AUTH_HEADER = "Authorization"
+
+# --- KV 绑定 ---
+[[kv_namespaces]]
+binding = "vault-access"
+id = "YOUR_KV_ID_HERE"
+
+# --- D1 绑定 ---
+[[d1_databases]]
+binding = "vault-data"
+database_name = "vault-service"
+database_id = "YOUR_D1_ID_HERE"
