@@ -2,6 +2,8 @@
 
 A personal lightweight SaaS service light database, supporting complex permission management. Designed for high-performance credential distribution and configuration sharing across devices.
 
+*The entire design is based on Cloudflare worker + KV + D1
+
 ## Features
 
 * **Low Latency Auth**: < 50ms authentication response via KV edge caching.
@@ -75,3 +77,4 @@ A personal lightweight SaaS service light database, supporting complex permissio
 Once deployed, you can access the frontend at your worker's URL (e.g., `https://vault-service.<your-subdomain>.workers.dev`).
 
 Use the `ADMIN_PASSWORD` you set to log in and manage tokens and permissions.
+
