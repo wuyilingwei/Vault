@@ -70,7 +70,7 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
    Initialize the D1 database schema using the provided SQL file:
 
    ```bash
-   npx wrangler d1 execute aethervault-service --file=./init.sql
+   npx wrangler d1 execute aethervault-service --remote --file=./init.sql
    ```
 6. **Deploy**
 
