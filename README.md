@@ -116,12 +116,12 @@ The API supports batch operations via the `ops` array. Each operation object can
 - `module` (required): Target module name.
 - `key` (optional): Target key (required for `write`, `append`, `read`).
 - `value` (optional): Data to write or append.
-- `separator` (optional): Delimiter used when appending data (recommended for `append`).
+- `separator` (optional): Delimiter definition (only valid for `write` operations).
 
 **Operation Types**
 
-- **write**: Overwrite value.
-- **append**: Append value using the specified separator.
+- **write**: Overwrite value (can define separator).
+- **append**: Append value using the pre-defined separator.
 - **read**: Retrieve a specific key's value.
 - **list**: List all keys and values within the specified module (scope).
 
@@ -131,9 +131,10 @@ The API supports batch operations via the `ops` array. Each operation object can
 {
     "ops": [
         { "id": "req1", "type": "write", "module": "config", "key": "theme", "value": "dark" },
-        { "id": "req2", "type": "append", "module": "logs", "key": "access", "value": "user_login", "separator": "\n" },
-        { "id": "req3", "type": "read", "module": "config", "key": "theme" },
-        { "id": "req4", "type": "list", "module": "config" }
+        { "id": "req2", "type": "write", "module": "logs", "key": "access", "value": "init", "separator": "\n" },
+        { "id": "req3", "type": "append", "module": "logs", "key": "access", "value": "user_login" },
+        { "id": "req4", "type": "read", "module": "config", "key": "theme" },
+        { "id": "req5", "type": "list", "module": "config" }
     ]
 }
 ```
@@ -143,9 +144,10 @@ The API supports batch operations via the `ops` array. Each operation object can
 ```json
 [
     { "id": "req1", "status": 200, "data": { "last_update": "2025-12-23T01:56:56.653Z" } },
-    { "id": "req2", "status": 200, "data": { "last_update": "2025-12-23T01:56:59.704Z" } },
-    { "id": "req3", "status": 200, "data": { "content": "dark", "last_update": "2025-12-23T01:56:59.704Z" } },
-    { "id": "req4", "status": 200, "data": { "items": { "theme": "dark", "lang": "en" } } }
+    { "id": "req2", "status": 200, "data": { "last_update": "2025-12-23T01:56:58.123Z" } },
+    { "id": "req3", "status": 200, "data": { "last_update": "2025-12-23T01:56:59.704Z" } },
+    { "id": "req4", "status": 200, "data": { "content": "dark", "last_update": "2025-12-23T01:56:59.704Z" } },
+    { "id": "req5", "status": 200, "data": { "items": { "theme": "dark", "lang": "en" } } }
 ]
 ```
 
