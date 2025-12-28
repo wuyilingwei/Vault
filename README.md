@@ -1,5 +1,7 @@
-# 🔐 Vault Service
+# 🔐 AetherVault
 
+> **Version 1.0.0 (Zephyr)**
+>
 > A personal lightweight SaaS database with complex permission management, designed for high-performance credential distribution and configuration sharing.
 
 ![Dashboard Screenshot](readmeRes/Screenshot.jpeg)
@@ -28,64 +30,60 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 
 ### Installation Steps
 
-1.  **Clone the repository**
+1. **Clone the repository**
 
-    ```bash
-    git clone https://github.com/wuyilingwei/Vault.git
-    cd Vault
-    ```
+   ```bash
+   git clone https://github.com/wuyilingwei/Vault.git
+   cd Vault
+   ```
+2. **Configure Wrangler**
 
-2.  **Configure Wrangler**
+   Create a copy of the configuration file:
 
-    Create a copy of the configuration file:
+   ```bash
+   cp wrangler.example.toml wrangler.toml
+   ```
+3. **Create Resources**
 
-    ```bash
-    cp wrangler.example.toml wrangler.toml
-    ```
+   Create the KV namespace for authentication:
 
-3.  **Create Resources**
+   ```bash
+   npx wrangler kv:namespace create aethervault-access
+   ```
 
-    Create the KV namespace for authentication:
+   Create the D1 database for data storage:
 
-    ```bash
-    npx wrangler kv:namespace create vault-access
-    ```
+   ```bash
+   npx wrangler d1 create aethervault-service
+   ```
 
-    Create the D1 database for data storage:
+   > ⚠️ **Important**: Update your `wrangler.toml` file with the `id` (for KV) and `database_id` (for D1) returned by the commands above.
+   >
+4. **Set Admin Password**
 
-    ```bash
-    npx wrangler d1 create vault-service
-    ```
+   Set the administrator password used for the frontend management interface:
 
-    > ⚠️ **Important**: Update your `wrangler.toml` file with the `id` (for KV) and `database_id` (for D1) returned by the commands above.
+   ```bash
+   npx wrangler secret put ADMIN_PASSWORD
+   ```
+5. **Initialize Database**
 
-4.  **Set Admin Password**
+   Initialize the D1 database schema using the provided SQL file:
 
-    Set the administrator password used for the frontend management interface:
+   ```bash
+   npx wrangler d1 execute aethervault-service --file=./init.sql
+   ```
+6. **Deploy**
 
-    ```bash
-    npx wrangler secret put ADMIN_PASSWORD
-    ```
+   Deploy the worker to Cloudflare:
 
-5.  **Initialize Database**
-
-    Initialize the D1 database schema using the provided SQL file:
-
-    ```bash
-    npx wrangler d1 execute vault-service --file=./init.sql
-    ```
-
-6.  **Deploy**
-
-    Deploy the worker to Cloudflare:
-
-    ```bash
-    npx wrangler deploy
-    ```
+   ```bash
+   npx wrangler deploy
+   ```
 
 ## 📖 Usage
 
-Once deployed, you can access the frontend at your worker's URL (e.g., `https://vault-service.<your-subdomain>.workers.dev`).
+Once deployed, you can access the frontend at your worker's URL (e.g., `https://aethervault-service.<your-subdomain>.workers.dev`).
 
 Use the `ADMIN_PASSWORD` you set to log in and manage tokens and permissions.
 
@@ -139,6 +137,3 @@ Use the `ADMIN_PASSWORD` you set to log in and manage tokens and permissions.
     }
 ]
 ```
-
-
-

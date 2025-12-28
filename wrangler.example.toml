@@ -1,19 +1,27 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "vault-service"
+name = "aethervault-service"
 main = "src/index.js"
 compatibility_date = "2025-12-22"
 
 [vars]
 API_PREFIX = "/api"
+ADMIN_USERNAME = "admin"
+BACKGROUND = "https://example.com/background.jpg"
+
+# [Develop]
+# For advanced users only. Generally, keep the defaults. Stability is not guaranteed if changed.
 AUTH_HEADER = "Authorization"
+SPLIT_TAG = "/*N*/"
+ADMIN_EDIT_RANGE = "*"
+ADMIN_DATABASE_VIEW = "true"
 
-# --- KV 绑定 ---
+# --- KV Binding ---
 [[kv_namespaces]]
-binding = "vault-access"
-id = "YOUR_KV_ID_HERE"
+binding = "aethervault-access"
+id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-# --- D1 绑定 ---
+# --- D1 Binding ---
 [[d1_databases]]
-binding = "vault-data"
-database_name = "vault-service"
-database_id = "YOUR_D1_ID_HERE"
+binding = "aethervault-data"
+database_name = "aethervault-service"
+database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"

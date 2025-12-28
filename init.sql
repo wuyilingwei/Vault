@@ -1,4 +1,4 @@
-﻿CREATE TABLE IF NOT EXISTS vault_items (
+﻿CREATE TABLE IF NOT EXISTS aethervault_items (
   module TEXT,
   key TEXT,
   value TEXT,

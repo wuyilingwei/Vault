@@ -5,7 +5,7 @@ export const html = `
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Vault</title>
+  <title>AetherVault</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>
     :root { 
@@ -137,7 +137,7 @@ export const html = `
     <!-- Login Screen -->
     <div v-if="!authenticated" class="login-container">
       <div class="login-box">
-        <h2 style="margin-bottom: 24px; color: var(--primary);">Vault Login</h2>
+        <h2 style="margin-bottom: 24px; color: var(--primary);">AetherVault Login</h2>
         <input type="password" v-model="password" placeholder="Password" @keyup.enter="login" style="margin-bottom: 16px;">
         <button class="btn btn-primary" style="width: 100%" @click="login">Login</button>
       </div>
@@ -146,7 +146,7 @@ export const html = `
     <!-- Main App -->
     <div v-else style="display: flex; flex-direction: column; height: 100%;">
         <header>
-            <h1>Vault Manager</h1>
+            <h1>AetherVault Manager</h1>
             <button class="btn btn-danger btn-sm" @click="logout">Logout</button>
         </header>
 
