@@ -113,9 +113,14 @@ All API requests must include the UUID (Device/App Identifier) in the `Authoriza
 
 **Operations**
 
-The API supports batch operations via the `ops` array. Each operation object can contain:
+The API supports batch operations via the `ops` array. Operations are executed **sequentially** in the exact order they appear in the JSON array to prevent data conflicts.
 
-- `id` (required): Custom identifier to track the operation in the response.
+> **Note**: The server does **not** sort operations by `id` or any other field. The execution order is strictly determined by the array index.
+
+Each operation object can contain:
+
+- `id` (optional): Custom identifier to track the operation in the response.
+  > **Recommendation**: Use unique IDs that reflect the execution order (e.g., `task_01`, `task_02`) to avoid confusion, although the API does not strictly enforce uniqueness.
 - `type` (required): Operation type (`write`, `append`, `read`, `list`).
 - `module` (required): Target module name.
 - `key` (optional): Target key (required for `write`, `append`, `read`).
