@@ -47,7 +47,7 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
    Create the KV namespace for authentication:
 
    ```bash
-   npx wrangler kv:namespace create aethervault-access
+   npx wrangler kv namespace create aethervault-access
    ```
 
    Create the D1 database for data storage:
