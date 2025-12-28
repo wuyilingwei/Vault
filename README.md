@@ -59,13 +59,17 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 
    > ⚠️ **Important**: Update your `wrangler.toml` file with the `id` (for KV) and `database_id` (for D1) returned by the commands above.
    >
-4. **Set Admin Password**
+4. **Configure Admin Access**
 
    Set the administrator password used for the frontend management interface:
 
    ```bash
    npx wrangler secret put ADMIN_PASSWORD
    ```
+
+   > ⚠️ **Security Note**: If `ADMIN_PASSWORD` is not set, all admin authorization attempts will be blocked for security.
+   >
+   > You can optionally configure the username by setting `ADMIN_USERNAME` in `wrangler.toml`. It defaults to `admin` if not specified.
 5. **Initialize Database**
 
    Initialize the D1 database schema using the provided SQL file:
@@ -87,7 +91,7 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 
 Once deployed, you can access the frontend at your worker's URL (e.g., `https://aethervault-service.<your-subdomain>.workers.dev`).
 
-Use the `ADMIN_PASSWORD` you set to log in. The frontend provides:
+Use your configured `ADMIN_USERNAME` (default: `admin`) and `ADMIN_PASSWORD` to log in. The frontend provides:
 - **Token Management**: Create and manage access tokens.
 - **Database Viewer**: View all data with support for custom separators and Base64 decoding/encoding.
 - **Data Editor**: Limited editing functionality for database items.
