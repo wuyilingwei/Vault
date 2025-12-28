@@ -199,7 +199,7 @@ async function handleDataApi(request, env, DB, KV) {
             } else if (type === "delete") {
                 if (!canWrite) throw { status: 403, message: "Delete Permission Denied" };
 
-                await DB.prepare("DELETE FROM vault_items WHERE module = ? AND key = ?")
+                await DB.prepare("DELETE FROM aethervault_items WHERE module = ? AND key = ?")
                     .bind(module, key).run();
 
                 result.data = { success: true };
@@ -213,16 +213,16 @@ async function handleDataApi(request, env, DB, KV) {
                 if (module) {
                     if (key) {
                         // List with prefix (Secure: ensure we only list what we checked permission for)
-                        query = "SELECT * FROM vault_items WHERE module = ? AND key LIKE ? ORDER BY key";
+                        query = "SELECT * FROM aethervault_items WHERE module = ? AND key LIKE ? ORDER BY key";
                         params = [module, key + '%'];
                     } else {
                         // List entire module
-                        query = "SELECT * FROM vault_items WHERE module = ? ORDER BY key";
+                        query = "SELECT * FROM aethervault_items WHERE module = ? ORDER BY key";
                         params = [module];
                     }
                 } else {
                     // List all (Global)
-                    query = "SELECT * FROM vault_items ORDER BY module, key";
+                    query = "SELECT * FROM aethervault_items ORDER BY module, key";
                 }
 
                 const { results: listResults } = await DB.prepare(query).bind(...params).all();
