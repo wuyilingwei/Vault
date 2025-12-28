@@ -15,11 +15,12 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 - 🛡️ **Data Security**: UUID-based module-level permission control.
 - 💾 **Reliable Storage**: Configuration items persisted in Cloudflare D1.
 - 📦 **Batch Operations**: Supports atomic batch read/write operations to reduce network round-trips.
-- 🖥️ **Lightweight Frontend**: Includes a Vue-based frontend for token management.
+- 🖥️ **Enhanced Frontend**: Includes a Vue-based frontend for token management, complete database viewing (custom separators, Base64 support), and limited editing capabilities.
 
 ---
 
-## 🚀 Deployment
+<details>
+<summary><h2>🚀 Deployment</h2></summary>
 
 ### Prerequisites
 
@@ -80,59 +81,72 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
    npx wrangler deploy
    ```
 
+</details>
+
 ## 📖 Usage
 
 Once deployed, you can access the frontend at your worker's URL (e.g., `https://aethervault-service.<your-subdomain>.workers.dev`).
 
-Use the `ADMIN_PASSWORD` you set to log in and manage tokens and permissions.
+Use the `ADMIN_PASSWORD` you set to log in. The frontend provides:
+- **Token Management**: Create and manage access tokens.
+- **Database Viewer**: View all data with support for custom separators and Base64 decoding/encoding.
+- **Data Editor**: Limited editing functionality for database items.
 
-### API Usage Example
+> ⚠️ **Note**: While the frontend supports data editing and includes compatibility checks, it is **not recommended** to perform large-scale or complex data changes directly through the UI.
 
-**Request** `POST /api/data`
+<details>
+<summary><h3>📚 API Documentation</h3></summary>
+
+**Authentication**
+
+All API requests must include the UUID (Device/App Identifier) in the `Authorization` header using the Bearer scheme:
+
+`Authorization: Bearer <YOUR_UUID_TOKEN>`
+
+**Endpoint**
+
+`POST /api/data`
+
+**Operations**
+
+The API supports batch operations via the `ops` array. Each operation object can contain:
+
+- `id` (required): Custom identifier to track the operation in the response.
+- `type` (required): Operation type (`write`, `append`, `read`, `list`).
+- `module` (required): Target module name.
+- `key` (optional): Target key (required for `write`, `append`, `read`).
+- `value` (optional): Data to write or append.
+- `separator` (optional): Delimiter used when appending data (recommended for `append`).
+
+**Operation Types**
+
+- **write**: Overwrite value.
+- **append**: Append value using the specified separator.
+- **read**: Retrieve a specific key's value.
+- **list**: List all keys and values within the specified module (scope).
+
+**Example Request**
 
 ```json
 {
     "ops": [
-        { "id": "task1", "type": "write", "module": "ip", "key": "blacklist", "value": "ip1", "separator": ", " },
-        { "id": "task2", "type": "append", "module": "ip", "key": "blacklist", "value": "ip2" },
-        { "id": "task3", "type": "read", "module": "ip", "key": "blacklist" },
-        { "id": "task4", "type": "write", "module": "ip", "key": "whitelist", "value": "ip3"  }
+        { "id": "req1", "type": "write", "module": "config", "key": "theme", "value": "dark" },
+        { "id": "req2", "type": "append", "module": "logs", "key": "access", "value": "user_login", "separator": "\n" },
+        { "id": "req3", "type": "read", "module": "config", "key": "theme" },
+        { "id": "req4", "type": "list", "module": "config" }
     ]
 }
 ```
 
-**Response**
+**Example Response**
 
 ```json
 [
-    {
-        "id": "task1",
-        "status": 200,
-        "data": {
-            "last_update": "2025-12-23T01:56:56.653Z"
-        }
-    },
-    {
-        "id": "task2",
-        "status": 200,
-        "data": {
-            "last_update": "2025-12-23T01:56:59.704Z"
-        }
-    },
-    {
-        "id": "task3",
-        "status": 200,
-        "data": {
-            "content": "ip1, ip2",
-            "last_update": "2025-12-23T01:56:59.704Z"
-        }
-    },
-    {
-        "id": "task4",
-        "status": 403,
-        "data": {
-            "error": "Write Permission Denied"
-        }
-    }
+    { "id": "req1", "status": 200, "data": { "last_update": "2025-12-23T01:56:56.653Z" } },
+    { "id": "req2", "status": 200, "data": { "last_update": "2025-12-23T01:56:59.704Z" } },
+    { "id": "req3", "status": 200, "data": { "content": "dark", "last_update": "2025-12-23T01:56:59.704Z" } },
+    { "id": "req4", "status": 200, "data": { "items": { "theme": "dark", "lang": "en" } } }
 ]
 ```
+
+</details>
