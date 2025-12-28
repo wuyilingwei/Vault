@@ -12,7 +12,6 @@ Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 
 ## ✨ Features
 
-- ⚡ **Low Latency Auth**: < 50ms authentication response via KV edge caching.
 - 🛡️ **Data Security**: UUID-based module-level permission control.
 - 💾 **Reliable Storage**: Configuration items persisted in Cloudflare D1.
 - 📦 **Batch Operations**: Supports atomic batch read/write operations to reduce network round-trips.
