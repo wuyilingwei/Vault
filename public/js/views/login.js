@@ -69,6 +69,7 @@ const LoginView = {
             if(!password.value || !username.value) return;
             loading.value = true;
             
+            // Note: Basic auth should only be used over HTTPS in production
             const auth = 'Basic ' + btoa(username.value + ':' + password.value);
             
             try {

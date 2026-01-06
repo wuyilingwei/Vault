@@ -212,8 +212,14 @@ const TokenView = {
         };
 
         const copyToClipboard = async (text) => {
-            await navigator.clipboard.writeText(text);
-            props.showToast('Copied to clipboard');
+            try {
+                await navigator.clipboard.writeText(text);
+                props.showToast('Copied to clipboard');
+            } catch (error) {
+                // Fallback for older browsers or permission issues
+                console.error('Failed to copy:', error);
+                props.showToast('Failed to copy to clipboard', 'error');
+            }
         };
 
         const copyPerms = async () => {

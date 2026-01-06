@@ -33,8 +33,10 @@ async function apiRequest(url, options = {}) {
         // Handle 401 Unauthorized - session expired
         if (response.status === 401) {
             localStorage.removeItem('v_auth');
-            // Redirect to login if not already there
-            if (window.location.hash !== '#/login') {
+            // Redirect to login - use router if available, otherwise use hash
+            if (window.router) {
+                window.router.push('/login');
+            } else if (window.location.hash !== '#/login') {
                 window.location.hash = '#/login';
             }
         }
