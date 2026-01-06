@@ -1,5 +1,5 @@
 // navbar.js - Navigation bar component
-const { ref, onMounted } = Vue;
+const { ref, onMounted, onUnmounted } = Vue;
 
 const NavBar = {
     template: `
@@ -32,6 +32,8 @@ const NavBar = {
     emits: ['logout'],
     setup() {
         const isDark = ref(false);
+        let mediaQuery = null;
+        let handleChange = null;
         
         // Initialize theme
         const initTheme = () => {
@@ -65,8 +67,8 @@ const NavBar = {
         onMounted(() => {
             initTheme();
             
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            const handleChange = (e) => {
+            mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            handleChange = (e) => {
                 if (!localStorage.getItem('theme')) {
                     isDark.value = e.matches;
                     applyTheme();
@@ -74,11 +76,13 @@ const NavBar = {
             };
             
             mediaQuery.addEventListener('change', handleChange);
-            
-            // Cleanup function
-            return () => {
+        });
+        
+        // Cleanup event listener
+        onUnmounted(() => {
+            if (mediaQuery && handleChange) {
                 mediaQuery.removeEventListener('change', handleChange);
-            };
+            }
         });
         
         return {

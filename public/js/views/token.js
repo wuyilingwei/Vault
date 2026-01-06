@@ -229,10 +229,22 @@ const TokenView = {
         const pastePerms = async () => {
             try {
                 const text = await navigator.clipboard.readText();
+                if (!text || !text.trim()) {
+                    props.showToast('Clipboard is empty', 'error');
+                    return;
+                }
                 const perms = JSON.parse(text);
                 selected.value.permsArray = Object.entries(perms).map(([path, access]) => ({path, access}));
                 props.showToast('Permissions pasted');
-            } catch { props.showToast('Invalid JSON', 'error'); }
+            } catch (error) {
+                if (error instanceof SyntaxError) {
+                    props.showToast('Invalid JSON format', 'error');
+                } else if (error.name === 'NotAllowedError') {
+                    props.showToast('Clipboard permission denied', 'error');
+                } else {
+                    props.showToast('Failed to paste from clipboard', 'error');
+                }
+            }
         };
 
         onMounted(() => {
