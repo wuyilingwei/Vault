@@ -8,6 +8,16 @@
 
 Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 
+### [Demo](https://aethervault-service-demo.yigeyigeren.workers.dev/) on Cloudflare
+
+username:admin password:123456
+
+This demo environment (AetherVault Demo) is for feature demonstration and technical exchange purposes only.
+
+Data Disclosure: Since the login credentials are publicly available, please do not upload any data involving personal privacy, production environment keys, or sensitive commercial information. Any data uploaded by any user can be viewed by other visitors.
+
+Data Persistence: Although currently configured to "not automatically delete data," this environment serves as an unstable demo node, and the author reserves the right to clear the database, reset the configuration, or stop the service at any time without prior notice.
+
 ---
 
 ## ✨ Features
