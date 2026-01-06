@@ -6,7 +6,7 @@
  * @param {object} options - Fetch options (method, body, etc.)
  * @returns {Promise<Response>} - The fetch response
  */
-export async function apiRequest(url, options = {}) {
+async function apiRequest(url, options = {}) {
     const authHeader = localStorage.getItem('v_auth');
     
     const headers = {
@@ -49,36 +49,37 @@ export async function apiRequest(url, options = {}) {
 /**
  * Makes a GET request
  */
-export async function apiGet(url) {
+async function apiGet(url) {
     return apiRequest(url, { method: 'GET' });
 }
 
 /**
  * Makes a POST request
  */
-export async function apiPost(url, data) {
+async function apiPost(url, data) {
     return apiRequest(url, { method: 'POST', body: data });
 }
 
 /**
  * Makes a PUT request
  */
-export async function apiPut(url, data) {
+async function apiPut(url, data) {
     return apiRequest(url, { method: 'PUT', body: data });
 }
 
 /**
  * Makes a DELETE request
  */
-export async function apiDelete(url) {
+async function apiDelete(url) {
     return apiRequest(url, { method: 'DELETE' });
 }
 
-// Export as default object
-export default {
+// Make API functions available globally
+window.api = {
     request: apiRequest,
     get: apiGet,
     post: apiPost,
     put: apiPut,
     delete: apiDelete
 };
+
