@@ -9,7 +9,9 @@
 Built on the robust **Cloudflare** ecosystem: **Workers** + **KV** + **D1**.
 
 <details>
-<summary><h3>[Demo on Cloudflare](https://aethervault-service-demo.yigeyigeren.workers.dev/)</h3></summary>
+<summary><h3>Demo on Cloudflare</h3></summary>
+
+URL: https://aethervault-service-demo.yigeyigeren.workers.dev
 
 username:admin password:123456
 
