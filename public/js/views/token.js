@@ -213,10 +213,11 @@ const TokenView = {
 
         const copyToClipboard = async (text) => {
             try {
+                // Note: Clipboard API requires HTTPS or localhost
                 await navigator.clipboard.writeText(text);
                 props.showToast('Copied to clipboard');
             } catch (error) {
-                // Fallback for older browsers or permission issues
+                // Fallback for older browsers, permission issues, or non-HTTPS
                 console.error('Failed to copy:', error);
                 props.showToast('Failed to copy to clipboard', 'error');
             }

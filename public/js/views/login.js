@@ -52,7 +52,11 @@ const LoginView = {
         };
 
         const updateTheme = () => {
-            document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light');
+            if (isDark.value) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
             localStorage.setItem('theme', isDark.value ? 'dark' : 'light');
         };
 

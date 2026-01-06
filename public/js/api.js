@@ -18,8 +18,11 @@ async function apiRequest(url, options = {}) {
         headers['Authorization'] = authHeader;
     }
     
-    // Add Content-Type for JSON payloads
-    if (options.body && typeof options.body === 'object') {
+    // Add Content-Type for JSON payloads (plain objects only, not FormData/Blob/etc)
+    if (options.body && typeof options.body === 'object' && 
+        !(options.body instanceof FormData) && 
+        !(options.body instanceof Blob) &&
+        !(options.body instanceof ArrayBuffer)) {
         headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(options.body);
     }
