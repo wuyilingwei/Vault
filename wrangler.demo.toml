@@ -1,0 +1,27 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "aethervault-service-demo"
+main = "src/index.js"
+compatibility_date = "2025-12-22"
+
+[vars]
+API_PREFIX = "/api"
+ADMIN_USERNAME = "admin"
+BACKGROUND = "https://images.unsplash.com/photo-1766839236852-2269734af68f?q=80"
+
+# [Develop]
+# For advanced users only. Generally, keep the defaults. Stability is not guaranteed if changed.
+AUTH_HEADER = "Authorization"
+SPLIT_TAG = "/*N*/"
+ADMIN_EDIT_RANGE = "*"
+ADMIN_DATABASE_VIEW = "true"
+
+# --- KV Binding ---
+[[kv_namespaces]]
+binding = "aethervault-access"
+id = "165800f01c2e4f7580463e21a0cfe310"
+
+# --- D1 Binding ---
+[[d1_databases]]
+binding = "aethervault-data"
+database_name = "aethervault-service-demo"
+database_id = "5c5a4585-c34b-4fad-9ceb-ff952ee38f7b"
