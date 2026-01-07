@@ -428,13 +428,13 @@
             
             const convertNewlinesToPlaceholder = (text) => {
                 if (typeof text !== 'string') return text;
-                return text.replace(/\\n/g, NEWLINE_PLACEHOLDER);
+                return text.replace(/\n/g, NEWLINE_PLACEHOLDER);
             };
             
             const convertPlaceholderToNewlines = (text) => {
                 if (typeof text !== 'string') return text;
                 // Use regex for escaping to avoid matching issues
-                return text.replace(/\\/\\*N\\*\\//g, '\\n');
+                return text.replace(/\/\*N\*\//g, '\n');
             };
 
             // Modal related computed properties
