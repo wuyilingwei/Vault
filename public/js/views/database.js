@@ -229,7 +229,7 @@
                     <div class="editor-stats">
                         <span>Characters: {{ modalValue.length }}</span>
                         <span style="margin-left: 16px;">Lines: {{ lineCount }}</span>
-                        <span v-if="displayMode === 'custom' && customLineBreak && customLineBreak !== '\\n'" style="margin-left: 16px;">
+                        <span v-if="displayMode === 'custom' && customLineBreak && customLineBreak !== '\n'" style="margin-left: 16px;">
                             Segments: {{ separatorCount }}
                         </span>
                         <button class="editor-action-btn" @click="copyContent" style="margin-left: 16px;">Copy</button>
@@ -301,7 +301,7 @@
             const modalValue = ref('');
             const modalTextarea = ref(null);
             const displayMode = ref('default'); // Display mode: default, custom
-            const customLineBreak = ref('\\n'); // Custom line break
+            const customLineBreak = ref('\n'); // Custom line break
             const sortField = ref(''); // Sort field
             const sortOrder = ref('asc'); // Sort order: asc or desc
 
@@ -445,12 +445,12 @@
 
             const lineCount = computed(() => {
                 if (!modalValue.value) return 0;
-                return modalValue.value.split('\\n').length;
+                return modalValue.value.split('\n').length;
             });
 
             const separatorCount = computed(() => {
                 if (!modalValue.value) return 0;
-                if (displayMode.value === 'custom' && customLineBreak.value && customLineBreak.value !== '\\n') {
+                if (displayMode.value === 'custom' && customLineBreak.value && customLineBreak.value !== '\n') {
                     return modalValue.value.split(customLineBreak.value).length;
                 }
                 return 0;
@@ -462,12 +462,12 @@
                 switch (displayMode.value) {
                     case 'separator':
                         if (currentSeparator.value) {
-                            return modalValue.value.split(currentSeparator.value).join('\\n');
+                            return modalValue.value.split(currentSeparator.value).join('\n');
                         }
                         return modalValue.value;
                     case 'custom':
                         if (customLineBreak.value) {
-                            return modalValue.value.split(customLineBreak.value).join('\\n');
+                            return modalValue.value.split(customLineBreak.value).join('\n');
                         }
                         return modalValue.value;
                     default:
@@ -480,9 +480,9 @@
                 
                 switch (displayMode.value) {
                     case 'custom':
-                        if (customLineBreak.value && customLineBreak.value !== '\\n') {
+                        if (customLineBreak.value && customLineBreak.value !== '\n') {
                             // Split modalValue (already placeholder version) by custom separator, join with newline for display
-                            return modalValue.value.split(customLineBreak.value).join('\\n');
+                            return modalValue.value.split(customLineBreak.value).join('\n');
                         }
                         // When no custom separator, display placeholder version directly
                         return modalValue.value;
@@ -496,7 +496,7 @@
             const canBase64Decode = computed(() => {
                 if (!modalValue.value) return false;
                 // Allow decoding only when content is a single line
-                const lines = modalValue.value.split('\\n').filter(line => line.trim());
+                const lines = modalValue.value.split('\n').filter(line => line.trim());
                 if (lines.length !== 1) return false;
                 
                 // Simple check if it might be base64 format
@@ -606,7 +606,7 @@
                             document.body.appendChild(tempDiv);
                             
                             // Find the widest line
-                            const lines = textarea.value.split('\\n');
+                            const lines = textarea.value.split('\n');
                             let maxWidth = 0;
                             lines.forEach(line => {
                                 tempDiv.textContent = line || ' '; // Replace empty lines with space
@@ -662,7 +662,7 @@
                     modalValue.value = convertNewlinesToPlaceholder(originalValue);
                 } else {
                     displayMode.value = 'default';
-                    customLineBreak.value = '\\n';
+                    customLineBreak.value = '\n';
                     // In default mode, store original value directly
                     modalValue.value = originalValue;
                 }
@@ -682,7 +682,7 @@
                 modalField.value = '';
                 modalValue.value = '';
                 displayMode.value = 'default';
-                customLineBreak.value = '\\n';
+                customLineBreak.value = '\n';
             };
 
             const applyModalChanges = () => {
@@ -890,7 +890,7 @@
             const base64Decode = () => {
                 if (!canBase64Decode.value) return;
                 try {
-                    const lines = modalValue.value.split('\\n').filter(line => line.trim());
+                    const lines = modalValue.value.split('\n').filter(line => line.trim());
                     const base64String = lines[0].trim();
                     const decoded = decodeURIComponent(escape(atob(base64String)));
                     modalValue.value = decoded;
