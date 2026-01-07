@@ -229,7 +229,7 @@
                     <div class="editor-stats">
                         <span>Characters: {{ modalValue.length }}</span>
                         <span style="margin-left: 16px;">Lines: {{ lineCount }}</span>
-                        <span v-if="displayMode === 'custom' && customLineBreak && customLineBreak !== '\\\\n'" style="margin-left: 16px;">
+                        <span v-if="displayMode === 'custom' && customLineBreak && customLineBreak !== '\\n'" style="margin-left: 16px;">
                             Segments: {{ separatorCount }}
                         </span>
                         <button class="editor-action-btn" @click="copyContent" style="margin-left: 16px;">Copy</button>
