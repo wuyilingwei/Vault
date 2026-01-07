@@ -1,7 +1,8 @@
 // token.js - Token management view component
-const { ref, computed, onMounted } = Vue;
+(function() {
+    const { ref, computed, onMounted } = Vue;
 
-const TokenView = {
+    const TokenView = {
     template: `
         <div class="token-container" style="display: flex; width: 100%; gap: 24px; height: 100%;">
             <!-- Sidebar -->
@@ -262,3 +263,4 @@ const TokenView = {
 
 // Make TokenView available globally
 window.TokenView = TokenView;
+})();

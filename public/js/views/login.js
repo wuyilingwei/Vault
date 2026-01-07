@@ -1,7 +1,8 @@
 // login.js - Login view component
-const { ref, onMounted } = Vue;
+(function() {
+    const { ref, onMounted } = Vue;
 
-const LoginView = {
+    const LoginView = {
     template: `
         <div class="login-page">
             <div class="login-container">
@@ -108,3 +109,4 @@ const LoginView = {
 
 // Make LoginView available globally
 window.LoginView = LoginView;
+})();

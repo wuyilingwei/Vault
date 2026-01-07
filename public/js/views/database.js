@@ -1,9 +1,9 @@
 // database.js - Database management view component
 // This is a placeholder - the actual implementation needs the full database.js content converted
+(function() {
+    const { ref, computed, onMounted, nextTick, watch } = Vue;
 
-const { ref, computed, onMounted, nextTick, watch } = Vue;
-
-const DatabaseView = {
+    const DatabaseView = {
     template: `
         <div class="database-container">
             <div class="database-header">
@@ -28,3 +28,4 @@ const DatabaseView = {
 
 // Make DatabaseView available globally
 window.DatabaseView = DatabaseView;
+})();

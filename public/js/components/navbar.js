@@ -1,7 +1,8 @@
 // navbar.js - Navigation bar component
-const { ref, onMounted, onUnmounted } = Vue;
+(function() {
+    const { ref, onMounted, onUnmounted } = Vue;
 
-const NavBar = {
+    const NavBar = {
     template: `
         <header>
             <div style="display: flex; align-items: center; gap: 32px;">
@@ -94,3 +95,4 @@ const NavBar = {
 
 // Make NavBar available globally
 window.NavBar = NavBar;
+})();
