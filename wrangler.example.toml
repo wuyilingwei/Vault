@@ -3,6 +3,10 @@ name = "aethervault-service"
 main = "src/index.js"
 compatibility_date = "2025-12-22"
 
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
 [vars]
 API_PREFIX = "/api"
 ADMIN_USERNAME = "admin"
