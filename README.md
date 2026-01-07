@@ -1,6 +1,6 @@
 # 🔐 AetherVault
 
-> **Version 1.0.0 (Zephyr)**
+> **Version 1.1.0 (Zephyr)**
 >
 > A personal lightweight SaaS database with complex permission management, designed for high-performance credential distribution and configuration sharing.
 
@@ -171,3 +171,4 @@ Each operation object can contain:
 ```
 
 </details>
+
