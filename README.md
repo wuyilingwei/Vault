@@ -1,6 +1,6 @@
 # 🔐 AetherVault
 
-> **Version 1.0.0 (Zephyr)**
+> **Version 1.1.0 (Zephyr)**
 >
 > A personal lightweight SaaS database with complex permission management, designed for high-performance credential distribution and configuration sharing.
 
@@ -16,6 +16,7 @@ URL: https://aethervault-service-demo.yigeyigeren.workers.dev
 username:admin password:123456
 
 Disclaimer: This environment is for AetherVault feature demonstration purposes only. Because login credentials are publicly available, uploading any real sensitive data (such as production environment keys, personal privacy information, etc.) is strictly prohibited. All data is publicly visible, and the author reserves the right to delete the database at any time without prior notice. By using this demo, you agree that the author will not be held legally responsible for any data loss or disclosure.
+
 </details>
 
 ---
@@ -80,6 +81,7 @@ Disclaimer: This environment is for AetherVault feature demonstration purposes o
    > ⚠️ **Security Note**: If `ADMIN_PASSWORD` is not set, all admin authorization attempts will be blocked for security.
    >
    > You can optionally configure the username by setting `ADMIN_USERNAME` in `wrangler.toml`. It defaults to `admin` if not specified.
+   >
 5. **Initialize Database**
 
    Initialize the D1 database schema using the provided SQL file:
@@ -102,6 +104,7 @@ Disclaimer: This environment is for AetherVault feature demonstration purposes o
 Once deployed, you can access the frontend at your worker's URL (e.g., `https://aethervault-service.<your-subdomain>.workers.dev`).
 
 Use your configured `ADMIN_USERNAME` (default: `admin`) and `ADMIN_PASSWORD` to log in. The frontend provides:
+
 - **Token Management**: Create and manage access tokens.
 - **Database Viewer**: View all data with support for custom separators and Base64 decoding/encoding.
 - **Data Editor**: Limited editing functionality for database items.
@@ -131,6 +134,7 @@ Each operation object can contain:
 
 - `id` (optional): Custom identifier to track the operation in the response.
   > **Recommendation**: Use unique IDs that reflect the execution order (e.g., `task_01`, `task_02`) to avoid confusion, although the API does not strictly enforce uniqueness.
+  >
 - `type` (required): Operation type (`write`, `append`, `read`, `list`).
 - `module` (required): Target module name.
 - `key` (optional): Target key (required for `write`, `append`, `read`).
