@@ -1,0 +1,90 @@
+// api.js - Unified API request handler
+
+/**
+ * Makes an authenticated API request
+ * @param {string} url - The API endpoint URL
+ * @param {object} options - Fetch options (method, body, etc.)
+ * @returns {Promise<Response>} - The fetch response
+ */
+async function apiRequest(url, options = {}) {
+    const authHeader = localStorage.getItem('v_auth');
+    
+    const headers = {
+        ...options.headers,
+    };
+    
+    // Add Authorization header if available
+    if (authHeader) {
+        headers['Authorization'] = authHeader;
+    }
+    
+    // Add Content-Type for JSON payloads (plain objects only, not FormData/Blob/etc)
+    if (options.body && typeof options.body === 'object' && 
+        !(options.body instanceof FormData) && 
+        !(options.body instanceof Blob) &&
+        !(options.body instanceof ArrayBuffer)) {
+        headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(options.body);
+    }
+    
+    try {
+        const response = await fetch(url, {
+            ...options,
+            headers
+        });
+        
+        // Handle 401 Unauthorized - session expired
+        if (response.status === 401) {
+            localStorage.removeItem('v_auth');
+            // Redirect to login - use router if available, otherwise use hash
+            if (window.router) {
+                window.router.push('/login');
+            } else if (window.location.hash !== '#/login') {
+                window.location.hash = '#/login';
+            }
+        }
+        
+        return response;
+    } catch (error) {
+        console.error('API Request failed:', error);
+        throw error;
+    }
+}
+
+/**
+ * Makes a GET request
+ */
+async function apiGet(url) {
+    return apiRequest(url, { method: 'GET' });
+}
+
+/**
+ * Makes a POST request
+ */
+async function apiPost(url, data) {
+    return apiRequest(url, { method: 'POST', body: data });
+}
+
+/**
+ * Makes a PUT request
+ */
+async function apiPut(url, data) {
+    return apiRequest(url, { method: 'PUT', body: data });
+}
+
+/**
+ * Makes a DELETE request
+ */
+async function apiDelete(url) {
+    return apiRequest(url, { method: 'DELETE' });
+}
+
+// Make API functions available globally
+window.api = {
+    request: apiRequest,
+    get: apiGet,
+    post: apiPost,
+    put: apiPut,
+    delete: apiDelete
+};
+

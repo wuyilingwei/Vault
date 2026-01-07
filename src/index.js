@@ -1,7 +1,5 @@
 import { handleApi } from './backend/api.js';
 import { handleAdminApi } from './backend/pages.js';
-import { renderHtml } from './frontend/render.js';
-import { icon } from './frontend/icon.js';
 
 // Handle Configuration API
 async function handleConfigApi(request, env) {
@@ -42,16 +40,22 @@ export default {
             return handleConfigApi(request, env);
         }
 
-        // Serve favicon
-        if (url.pathname === '/favicon.svg') {
-            return new Response(icon, {
-                headers: { 'Content-Type': 'image/svg+xml' }
-            });
+        // Serve static assets and frontend (SPA routing)
+        // Try to fetch from ASSETS, fallback to index.html for SPA routing
+        try {
+            const assetResponse = await env.ASSETS.fetch(request);
+            
+            // If asset found, return it
+            if (assetResponse.status !== 404) {
+                return assetResponse;
+            }
+            
+            // For SPA routing: if no asset found, serve index.html
+            const indexRequest = new Request(new URL('/index.html', request.url), request);
+            return env.ASSETS.fetch(indexRequest);
+        } catch (error) {
+            // Fallback in case ASSETS binding is not available
+            return new Response('Static assets not configured', { status: 500 });
         }
-
-        // Serve Management UI (HTML)
-        return new Response(renderHtml(env), {
-            headers: { 'Content-Type': 'text/html' }
-        });
     }
 };

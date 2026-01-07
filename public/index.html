@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AetherVault</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+  <link rel="stylesheet" href="/js/common.css">
+  <script src="/js/api.js"></script>
+</head>
+<body>
+  <div id="app">
+    <nav-bar v-if="showNav" @logout="onLogout" :show-database="showDatabase"></nav-bar>
+    
+    <div class="container" :class="{ 'full-height': !showNav }">
+        <router-view 
+            @login-success="onLoginSuccess"
+            :auth-header="authHeader" 
+            :show-toast="showToast">
+        </router-view>
+    </div>
+
+    <footer class="app-footer" v-if="showNav">
+        <div>Powered by <a href="https://github.com/wuyilingwei/Vault" target="_blank" style="color: inherit; text-decoration: underline;">AetherVault</a></div>
+    </footer>
+
+    <!-- Toasts -->
+    <div class="toast-container">
+        <div v-for="msg in toasts" :key="msg.id" class="toast" 
+             :style="{background: msg.type === 'error' ? 'var(--danger)' : 'var(--success)'}">
+            {{ msg.text }}
+        </div>
+    </div>
+  </div>
+
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/views/login.js"></script>
+  <script src="/js/views/token.js"></script>
+  <script src="/js/views/database.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
